@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fem Over!</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 4rem;
+        margin: 0;
+    }
+
+    p {
+        font-size: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: yellow;
+        animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-100vh) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<div id="content">
+    <h1 id="message">Venter på fem over...</h1>
+    <p id="time"></p>
+</div>
+
+<script>
+function updateClock() {
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const timeString = now.toLocaleTimeString("no-NO");
+
+    document.getElementById("time").textContent = "Klokka er: " + timeString;
+
+    if (minutes === 5) {
+        document.getElementById("message").textContent = "🎉 DET ER FEM OVER! 🎉";
+        launchConfetti();
+    } else {
+        document.getElementById("message").textContent = "Venter på fem over...";
+    }
+}
+
+function launchConfetti() {
+    for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background = randomColor();
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+    }
+}
+
+function randomColor() {
+    const colors = ["#ff0", "#f0f", "#0ff", "#0f0", "#ff5733"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
